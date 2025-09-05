@@ -4,8 +4,8 @@ This project provides automated tests for the [fakerapi.it](https://fakerapi.it/
 
 ## Prerequisites
 
-- Java 11 or higher
-- Maven (recommended)
+- latest Java 24
+- Maven
 - Internet connection (for API calls and dependency downloads)
 
 ## Project Structure
@@ -23,7 +23,6 @@ src/
       utils/
     resources/
       schemas/
-        ApiV1CompaniesGETSchema.json
 ```
 
 ## How to Run
