@@ -35,9 +35,7 @@ public class ApiV1CompaniesGETTest {
     void testCompaniesJsonSchema() throws Exception {
         String json = client.callApiV1CompaniesGET();
 
-        try (InputStream schemaStream = getClass().getClassLoader()
-                .getResourceAsStream("schemas/companies-schema.json")) {
-
+        try (InputStream schemaStream = getClass().getClassLoader().getResourceAsStream("schemas/ApiV1CompaniesGETSchema.json")) {
             JSONObject rawSchema = new JSONObject(new JSONTokener(schemaStream));
             Schema schema = SchemaLoader.load(rawSchema);
 
