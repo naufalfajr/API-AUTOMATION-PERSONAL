@@ -8,11 +8,12 @@ import java.net.http.HttpResponse;
 import base.BaseApi;
 
 public class ApiV1CompaniesGET extends BaseApi {
-    private static final String BASE_URL = "https://fakerapi.it/api/v1/companies?_quantity=20";
+    private static final String BASE_URL = "https://fakerapi.it/api/v1/companies?_quantity=%d";
 
-    public String callApiV1CompaniesGET() throws IOException, InterruptedException {
+    public String callApiV1CompaniesGET(int qty) throws IOException, InterruptedException {
+        String url = String.format(BASE_URL, qty);
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL))
+                .uri(URI.create(url))
                 .GET()
                 .build();
 

@@ -5,7 +5,8 @@ import models.ResponseApiV1CompaniesGET;
 import utils.SchemaValidator;
 
 import com.google.gson.Gson;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,13 +15,14 @@ public class ApiV1CompaniesGETTest {
     private final ApiV1CompaniesGET client = new ApiV1CompaniesGET();
     private final Gson gson = new Gson();
 
-    @Test
-    void testCompaniesIdNotNull() throws Exception {
-        String json = client.callApiV1CompaniesGET();
+    @ParameterizedTest
+    @ValueSource(ints = {20, 5, 1})
+    void testCompaniesIdNotNullAndSchema(int qty) throws Exception {
+        String json = client.callApiV1CompaniesGET(qty);
         ResponseApiV1CompaniesGET response = gson.fromJson(json, ResponseApiV1CompaniesGET.class);
 
         assertEquals(200, response.code, "Expected HTTP code 200 in body");
-        assertEquals(20, response.total, "Expected total = 20");
+        assertEquals(qty, response.total, "Expected total = " + qty);
 
         response.data.forEach(company -> {
             assertNotNull(company.id, "Company ID should not be null");
@@ -31,11 +33,8 @@ public class ApiV1CompaniesGETTest {
                 assertNotNull(company.contact.id, "Contact ID should not be null");
             }
         });
-    }
 
-    @Test
-    void testCompaniesJsonSchema() throws Exception {
-        String json = client.callApiV1CompaniesGET();
+        // Schema validation inside the test
         SchemaValidator.validateJsonAgainstSchema("ApiV1CompaniesGETSchema.json", json);
     }
 }
