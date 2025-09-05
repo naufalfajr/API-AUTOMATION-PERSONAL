@@ -2,14 +2,10 @@ package tests;
 
 import clients.ApiV1CompaniesGET;
 import models.ResponseApiV1CompaniesGET;
-import com.google.gson.Gson;
-import org.everit.json.schema.Schema;
-import org.everit.json.schema.loader.SchemaLoader;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-import org.junit.jupiter.api.Test;
+import utils.SchemaValidator;
 
-import java.io.InputStream;
+import com.google.gson.Gson;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,20 +22,20 @@ public class ApiV1CompaniesGETTest {
         assertEquals(200, response.code, "Expected HTTP code 200 in body");
         assertEquals(20, response.total, "Expected total = 20");
 
-        // Loop verify ID
-        response.data.forEach(company ->
-                assertNotNull(company.id, "Company ID should not be null"));
+        response.data.forEach(company -> {
+            assertNotNull(company.id, "Company ID should not be null");
+            if (company.addresses != null) {
+                company.addresses.forEach(address -> assertNotNull(address.id, "Address ID should not be null"));
+            }
+            if (company.contact != null) {
+                assertNotNull(company.contact.id, "Contact ID should not be null");
+            }
+        });
     }
 
     @Test
     void testCompaniesJsonSchema() throws Exception {
         String json = client.callApiV1CompaniesGET();
-
-        try (InputStream schemaStream = getClass().getClassLoader().getResourceAsStream("schemas/ApiV1CompaniesGETSchema.json")) {
-            JSONObject rawSchema = new JSONObject(new JSONTokener(schemaStream));
-            Schema schema = SchemaLoader.load(rawSchema);
-
-            schema.validate(new JSONObject(json)); // throws exception if invalid
-        }
+        SchemaValidator.validateJsonAgainstSchema("ApiV1CompaniesGETSchema.json", json);
     }
 }

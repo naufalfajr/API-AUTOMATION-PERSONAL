@@ -16,8 +16,7 @@ public class SchemaValidator {
      * @throws RuntimeException if validation fails
      */
     public static void validateJsonAgainstSchema(String schemaFileName, String jsonResponse) {
-        try (InputStream schemaStream = SchemaValidator.class.getClassLoader()
-                .getResourceAsStream("schemas/" + schemaFileName)) {
+        try (InputStream schemaStream = SchemaValidator.class.getClassLoader().getResourceAsStream("schemas/" + schemaFileName)) {
 
             if (schemaStream == null) {
                 throw new IllegalArgumentException("Schema file not found: " + schemaFileName);
@@ -26,7 +25,7 @@ public class SchemaValidator {
             JSONObject rawSchema = new JSONObject(new JSONTokener(schemaStream));
             Schema schema = SchemaLoader.load(rawSchema);
 
-            schema.validate(new JSONObject(jsonResponse)); // throws ValidationException if invalid
+            schema.validate(new JSONObject(jsonResponse));
 
         } catch (Exception e) {
             throw new RuntimeException("Schema validation failed: " + e.getMessage(), e);
