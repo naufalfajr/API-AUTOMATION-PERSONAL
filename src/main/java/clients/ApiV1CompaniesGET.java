@@ -23,6 +23,9 @@ public class ApiV1CompaniesGET extends BaseApi {
             throw new RuntimeException("Request failed: HTTP "+response.statusCode()+" - "+response.body());
         }
 
+        System.out.println("\nResponse API: ");
+        System.out.println(response.body());
+
         return response.body();
     }
 }
