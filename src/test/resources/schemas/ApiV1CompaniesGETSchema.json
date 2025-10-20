@@ -90,53 +90,6 @@
                     "latitude",
                     "longitude"
                   ]
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "integer"
-                    },
-                    "street": {
-                      "type": "string"
-                    },
-                    "streetName": {
-                      "type": "string"
-                    },
-                    "buildingNumber": {
-                      "type": "string"
-                    },
-                    "city": {
-                      "type": "string"
-                    },
-                    "zipcode": {
-                      "type": "string"
-                    },
-                    "country": {
-                      "type": "string"
-                    },
-                    "country_code": {
-                      "type": "string"
-                    },
-                    "latitude": {
-                      "type": "number"
-                    },
-                    "longitude": {
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "street",
-                    "streetName",
-                    "buildingNumber",
-                    "city",
-                    "zipcode",
-                    "country",
-                    "country_code",
-                    "latitude",
-                    "longitude"
-                  ]
                 }
               ]
             },
